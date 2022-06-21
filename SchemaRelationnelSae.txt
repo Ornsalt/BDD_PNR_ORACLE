@@ -1,0 +1,86 @@
+------------------------
+-- Schéma relationnel --
+------------------------
+
+/*
+
+Pays 
+	(
+	nom : string (1)
+	regionDuMonde : string (NN)
+	nbHab : int
+	pib : int
+	)
+	
+Domaine
+	(
+	intituleDomaine : string (1)
+	)
+	
+TypeEquipement
+	(
+	intituleTypeEquipement : string (1)
+	dureeVie : int (NN)
+	@leDomaine : string REF Domaine(intituleDomaine) (NN)
+	)
+	
+IndicateurEnv
+	(
+	acronyme : string (1)
+	intituleIndicateurEnv : string
+	unite : string
+	)
+	
+Pays_A_TypeEquipement
+	(
+	@unPays : string REF Pays(nom) (1)
+	@unTypeEquipement : string REF TypeEquipement(intituleTypeEquipement) (1)
+	nombre : int
+	)
+	
+TypeEquipement_Impacte_IndicateurEnv
+	(
+	@unTypeEquipement : string REF TypeEquipement(intituleTypeEquipement) (1)
+	@unIndicateurEnv : string REF IndicateurEnv(acronyme) (1)
+	valeurUnitaire : int
+	)
+	
+Mesure
+	(
+	@unPays : string REF Pays(nom) (1)
+	@unDomaine : string REF Domaine(intituleDomaine) (1)
+	@unIndicateurEnv : string IndicateurEnv(acronyme) (1)
+	valeur : int
+	)
+
+*/
+	
+-----------------	
+-- Contraintes --
+-----------------
+
+-- Pays
+-------
+
+-- dom(regionDuMonde) = {'Afrique', 'Amerique du Nord', 'Amerique du Sud', 'Antarctique', 'Asie', 'Europe', 'Oceanie'}
+
+-- Domaine
+----------
+
+-- dom(intituleDomaine) = {'Utilisateur', 'Reseau', 'Data center'}
+-- Domaine[intituleDomaine] = TypeEquipement[@leDomaine] (contrainte non implémentée)
+
+-- IndicateurEnv
+----------------
+
+-- dom(acronyme) = {'GES', 'BEP', 'ADP', 'EAU', 'ELEC'}
+
+-- Remarques
+------------
+
+-- les deux contraintes de cycles ne seront pas implémentées 
+-- on verra au semestre 2 comment se passer de la table "Mesure" en créant une vue contenant l'attribut dérivable "valeur"
+
+
+
+	
